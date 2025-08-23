@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GREDDO Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">GREDDO</div>
+    <nav>
+      <button onclick="showTab('status', event)" class="active">Status</button>
+      <button onclick="showTab('project', event)">Project</button>
+      <button onclick="showTab('event', event)">Event</button>
+    </nav>
+    <div id="header-countdown"></div>
+    <button id="dark-mode-toggle">🌙</button>
+  </header>
+
+  <main>
+    <!-- Status Tab -->
+    <section id="status" class="tab-content" style="display:block;">
+      <h2>System Status</h2>
+      <div class="status-card">
+        <h3>🎮 GREDDO | Germany</h3>
+        <div class="status-info">
+          <span class="status-dot green"></span> <strong>ONLINE</strong>
+        </div>
+      </div>
+      <div class="status-card">
+        <h3>🤖 GREDDO Support Bot <span class="tag">BOT</span></h3>
+        <div class="status-info">
+          <span class="status-dot yellow"></span> <strong>ISSUE</strong>
+        </div>
+      </div>
+      <div class="status-card">
+        <h3>🤖 GREDDO Administration <span class="tag">BOT</span></h3>
+        <div class="status-info">
+          <span class="status-dot yellow"></span> <strong>ISSUE</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Tab -->
+    <section id="project" class="tab-content" style="display:none;">
+      <h2>Project: GREDDO | Germany</h2>
+      <div class="project-box">
+        <div class="progress-bar">
+          <div class="progress" style="width: 100%"></div>
+        </div>
+        <span>100%</span>
+        <span class="tag">RELEASE TODAY</span>
+      </div>
+    </section>
+
+    <!-- Event Tab -->
+    <section id="event" class="tab-content" style="display:none;">
+      <h2>Next Event</h2>
+      <p>21:00 (German Time) - Release GREDDO | Germany</p>
+      <div id="countdown"></div>
+    </section>
+  </main>
+
+  <!-- News Ticker -->
+  <div class="news-ticker">
+    <marquee behavior="scroll" direction="left">
+      Today at 21:00 CET: Release of GREDDO | Germany
+    </marquee>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+

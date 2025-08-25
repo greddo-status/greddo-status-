@@ -1,77 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GREDDO Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GREDDO Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <div class="logo">GREDDO</div>
-    <nav>
-      <button onclick="showTab('status', event)" class="active">Status</button>
-      <button onclick="showTab('project', event)">Project</button>
-      <button onclick="showTab('event', event)">Event</button>
-    </nav>
-    <div id="header-countdown"></div>
-    <button id="dark-mode-toggle">🌙</button>
-  </header>
-
-  <main>
-    <!-- Status Tab -->
-    <section id="status" class="tab-content" style="display:block;">
-      <h2>System Status</h2>
-      <div class="status-card">
-        <h3>🎮 GREDDO | Germany</h3>
-        <div class="status-info">
-          <span class="status-dot green"></span> <strong>ONLINE</strong>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="logo-letter">G</span>
+            <span class="logo-text">REDDO</span>
         </div>
-      </div>
-      <div class="status-card">
-        <h3>🤖 GREDDO Support Bot <span class="tag">BOT</span></h3>
-        <div class="status-info">
-          <span class="status-dot yellow"></span> <strong>ISSUE</strong>
-        </div>
-      </div>
-      <div class="status-card">
-        <h3>🤖 GREDDO Administration <span class="tag">BOT</span></h3>
-        <div class="status-info">
-          <span class="status-dot yellow"></span> <strong>ISSUE</strong>
-        </div>
-      </div>
-    </section>
+        <nav>
+            <button class="active" onclick="showTab('status', this)"><i class="fas fa-server"></i> Status</button>
+            <button onclick="showTab('shift', this)"><i class="fas fa-clock"></i> Shift</button>
+            <button onclick="showTab('project', this)"><i class="fas fa-tasks"></i> Project</button>
+        </nav>
+    </aside>
 
-    <!-- Project Tab -->
-    <section id="project" class="tab-content" style="display:none;">
-      <h2>Project: GREDDO | Germany</h2>
-      <div class="project-box">
-        <div class="progress-bar">
-          <div class="progress" style="width: 100%"></div>
-        </div>
-        <span>100%</span>
-        <span class="tag">RELEASE TODAY</span>
-      </div>
-    </section>
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <h1 id="rotating-text">STATUS</h1>
+        </header>
 
-    <!-- Event Tab -->
-    <section id="event" class="tab-content" style="display:none;">
-      <h2>Next Event</h2>
-      <p>21:00 (German Time) - Release GREDDO | Germany</p>
-      <div id="countdown"></div>
-    </section>
-  </main>
+        <main>
+            <!-- STATUS TAB -->
+            <section id="status" class="tab-content">
+                <h2>System Status</h2>
+                <div id="status-container" class="status-container">
+                    <!-- Loaded by script.js -->
+                </div>
+            </section>
 
-  <!-- News Ticker -->
-  <div class="news-ticker">
-    <marquee behavior="scroll" direction="left">
-      Today at 21:00 CET: Release of GREDDO | Germany
-    </marquee>
-  </div>
+            <!-- SHIFT TAB -->
+            <section id="shift" class="tab-content hidden">
+                <h2>Daily Shift</h2>
+                <div class="shift-card">
+                    <h3>GREDDO | Germany</h3>
+                    <p><span id="shift-status"></span></p>
+                    <p><strong>21:00 - 22:00</strong></p>
+                    <p id="shift-countdown"></p>
+                </div>
+            </section>
 
-  <script src="script.js"></script>
+            <!-- PROJECT TAB -->
+            <section id="project" class="tab-content hidden">
+                <h2>Project: GREDDO | Germany</h2>
+                <div class="project-card">
+                    <h3>Release Progress</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width:100%"></div>
+                    </div>
+                    <p><span class="tag">Released</span></p>
+                    <div class="update-log">
+                        <h4>Update Log</h4>
+                        <ul>
+                            <li>Added new Main Menu</li>
+                            <li>Added new Order System</li>
+                            <li>New Uniform</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- News Bar -->
+    <div class="news-bar">
+        <marquee behavior="scroll" direction="left">+++ Currently no important announcements +++</marquee>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
+
 
 
 

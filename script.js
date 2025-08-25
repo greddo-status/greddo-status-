@@ -1,53 +1,106 @@
-// Tabs umschalten
-function showTab(tabId, event) {
-  document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-  document.querySelectorAll('header nav button').forEach(btn => btn.classList.remove('active'));
-  document.getElementById(tabId).style.display = 'block';
-  if (event) event.target.classList.add('active');
+// Tab Navigation
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+    });
+    document.getElementById(tabId).classList.remove('hidden');
+
+    document.querySelectorAll('.sidebar nav button').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
 }
 
-// Countdown
-function startCountdown() {
-  const countdownElement = document.getElementById('countdown');
-  const headerCountdown = document.getElementById('header-countdown');
+// Rotierende Header-Texte (STATUS / SHIFT / PROJECT)
+const headerText = document.getElementById('header-text');
+const titles = ["STATUS", "SHIFT", "PROJECT"];
+let titleIndex = 0;
+function rotateHeader() {
+    headerText.style.opacity = 0;
+    setTimeout(() => {
+        headerText.textContent = titles[titleIndex];
+        headerText.style.opacity = 1;
+        titleIndex = (titleIndex + 1) % titles.length;
+    }, 500);
+}
+setInterval(rotateHeader, 3000);
 
-  const eventTime = new Date();
-  eventTime.setHours(21, 0, 0, 0); // 21:00 Uhr
+// Status Cards laden
+function loadStatus() {
+    const statusContainer = document.getElementById('status-container');
+    const systems = [
+        { name: 'GREDDO | Germany', status: 'ONLINE', color: 'green', tag: 'GAME' },
+        { name: 'GREDDO Support Bot', status: 'ISSUE', color: 'yellow', tag: 'BOT' },
+        { name: 'GREDDO Administration', status: 'ISSUE', color: 'yellow', tag: 'BOT' }
+    ];
 
-  function updateCountdown() {
-    const now = new Date();
-    let diff = eventTime - now;
+    statusContainer.innerHTML = ''; // clear old content
 
-    if (diff <= 0) {
-      countdownElement.textContent = 'RELEASED';
-      countdownElement.classList.add('released');
-      headerCountdown.textContent = 'RELEASED';
-      clearInterval(timer);
-      return;
+    systems.forEach(system => {
+        const div = document.createElement('div');
+        div.className = 'status-card';
+        div.innerHTML = `
+            <div class="status-info">
+                <span class="status-dot ${system.color}"></span>
+                <strong>${system.name}</strong>
+            </div>
+            <div>
+                <span>${system.status}</span>
+                <span class="tag">${system.tag}</span>
+            </div>
+        `;
+        statusContainer.appendChild(div);
+    });
+}
+
+// Shift Countdown
+function initShiftCountdown() {
+    const shiftTimeStart = 21; // 21:00
+    const shiftTimeEnd = 22;   // 22:00
+    const shiftStatus = document.getElementById('shift-status');
+    const shiftCountdown = document.getElementById('shift-countdown');
+
+    function updateShift() {
+        const now = new Date();
+        const start = new Date();
+        const end = new Date();
+        start.setHours(shiftTimeStart, 0, 0, 0);
+        end.setHours(shiftTimeEnd, 0, 0, 0);
+
+        if (now < start) {
+            let diff = (start - now) / 1000;
+            if (diff <= 600) { // less than 10 minutes
+                shiftStatus.textContent = "Starting Soon";
+            } else {
+                shiftStatus.textContent = "Upcoming";
+            }
+            shiftCountdown.textContent = formatTime(diff);
+        } else if (now >= start && now < end) {
+            shiftStatus.textContent = "In Progress";
+            let diff = (end - now) / 1000;
+            shiftCountdown.textContent = formatTime(diff);
+        } else {
+            shiftStatus.textContent = "Shift has ended";
+            shiftCountdown.textContent = "";
+        }
     }
 
-    const hours = Math.floor(diff / 1000 / 60 / 60);
-    const minutes = Math.floor((diff / 1000 / 60) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+    function formatTime(seconds) {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = Math.floor(seconds % 60);
+        return `${h}h ${m}m ${s}s`;
+    }
 
-    const timeText = `${hours}h ${minutes}m ${seconds}s`;
-    countdownElement.textContent = timeText;
-    headerCountdown.textContent = `Next Event in: ${timeText}`;
-  }
-
-  updateCountdown();
-  const timer = setInterval(updateCountdown, 1000);
+    updateShift();
+    setInterval(updateShift, 1000);
 }
 
-// Dark Mode Toggle
-document.getElementById('dark-mode-toggle').addEventListener('click', () => {
-  document.body.classList.toggle('dark');
+// Initialisierung
+document.addEventListener('DOMContentLoaded', () => {
+    loadStatus();
+    initShiftCountdown();
+    rotateHeader();
 });
 
-// Init
-document.addEventListener('DOMContentLoaded', () => {
-  startCountdown();
-});
 
 
 
